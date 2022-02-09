@@ -1,4 +1,7 @@
-vector<int> c(3, 0);
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        vector<int>c(3, 0);
         int j = 0;
         int ans = 0;
         for (int i = 0; i < s.length(); i++)
@@ -6,9 +9,11 @@ vector<int> c(3, 0);
             c[s[i] - 'a']++;
             while (c[0] > 0 && c[1] > 0 && c[2] > 0 && j <= i)
             {
-                c[s[j]]--;
+                c[s[j]-'a']--;
                 ans += s.length() - i;
                 j++;
             }
         }
         return ans;
+    }
+};
