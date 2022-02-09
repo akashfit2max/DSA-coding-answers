@@ -1,0 +1,14 @@
+vector<int> c(3, 0);
+        int j = 0;
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++)
+        {
+            c[s[i] - 'a']++;
+            while (c[0] > 0 && c[1] > 0 && c[2] > 0 && j <= i)
+            {
+                c[s[j]]--;
+                ans += s.length() - i;
+                j++;
+            }
+        }
+        return ans;
