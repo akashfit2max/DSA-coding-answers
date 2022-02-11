@@ -1,0 +1,39 @@
+https://leetcode.com/problems/most-common-word/
+
+
+
+class Solution {
+public:
+    string mostCommonWord(string paragraph, vector<string>& banned) {
+//         using map to store the freq of each word
+        unordered_map<string,int>mp;
+        for(int i=0;i<paragraph.length();) {
+            string res="";
+            while(i<paragraph.length() && isalpha(paragraph[i])) {
+                res+= tolower(paragraph[i]);
+                i++;
+            }
+            while(i<paragraph.length() && !isalpha(paragraph[i])) {
+                i++;
+            }
+            mp[res]++;
+        }
+        
+        // making the freq of the banned words as 0
+        for(auto words : banned) {
+            mp[words]=0;
+        }
+        
+        int ans=0;
+        string res;
+         for(auto ch : mp) {
+             // cout<<ch.first<<" "<<ch.second<<"\n";
+             if(ch.second > ans) {
+                 ans = ch.second;
+                 res = ch.first;
+             }
+         } 
+        
+        return res;
+    }
+};
