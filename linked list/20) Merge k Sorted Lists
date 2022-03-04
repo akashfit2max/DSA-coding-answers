@@ -1,0 +1,40 @@
+https://leetcode.com/problems/merge-k-sorted-lists/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        map<int,int>mp;
+//         storing frequency and value in sorted orded of val
+        for(auto list : lists) {
+            auto node = list;
+            while(node) {
+                int temp = node->val;
+                mp[temp]++;
+                node  = node->next;
+            }
+        }
+        
+        ListNode *dummy = new ListNode(0);
+        ListNode *curr = dummy;
+        
+        for(auto it : mp) {
+            while(it.second!=0) {
+                ListNode * n = new ListNode(it.first);
+                curr->next = n;
+                curr=curr->next;
+                it.second--;
+            }
+        }
+        return dummy->next;
+    }
+};
