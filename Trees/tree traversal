@@ -1,1 +1,91 @@
 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+class Node {
+
+    public:
+        int data;
+        Node *left;
+        Node *right;
+    
+    Node (int val) {
+        data = val;
+        left=right=nullptr;
+    }
+};
+
+ void traverNode(Node *root) {
+        if(root == nullptr) {
+            return;
+        }
+        traverNode(root->left);
+        cout<<root->data<<" ";
+        traverNode(root->right);
+}
+
+// Following is a simple stack based iterative process to print Preorder traversal. 
+
+// Create an empty stack nodeStack and push root node to stack. 
+// Do the following while nodeStack is not empty. 
+//     Pop an item from the stack and print it. 
+//     Push right child of a popped item to stack 
+//     Push left child of a popped item to stack
+// The right child is pushed before the left child to make sure that the left subtree is processed first.
+void iterativePreOrderTraversal(Node * root) 
+{
+    if (root == NULL)
+        return;
+    stack<Node *>s;
+    s.push(root);
+    
+    while(s.empty() == false) {
+        Node *curr = s.top();
+        cout<<curr->data<<" ";
+        s.pop();
+         if(curr->right != nullptr) {
+            s.push(curr->right);
+        }
+        if(curr->left!=nullptr) {
+            s.push(curr->left);
+        } 
+    }
+}
+
+void iterativePostOrderTraversal(Node * root) 
+{
+    stack<Node *>s1,s2;
+    s1.push(root);
+    while(!s1.empty()) {
+        Node *curr = s1.top();
+        s2.push(curr);
+        s1.pop();
+        if(curr->left) {
+            s1.push(curr->left);
+        }
+        if(curr->right) {
+            s1.push(curr->right);
+        }
+    }
+    
+    while(!s2.empty()) {
+        Node *op = s2.top();
+        cout<<op->data<<" ";
+        s2.pop();
+    }
+}
+
+int main() {
+    Node *root = new Node(10);
+    root->left = new Node(8);
+    root->right = new Node(2);
+    root->left->left = new Node(3);
+    root->left->right = new Node(5);
+    root->right->left = new Node(2);
+    cout<<"inorder traversal\n";
+    traverNode(root);
+     cout<<"\npreorder traversal\n";
+    iterativePreOrderTraversal(root);
+    cout<<"\npost order\n";
+    iterativePostOrderTraversal(root);
+}
