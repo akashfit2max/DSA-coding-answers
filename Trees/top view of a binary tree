@@ -1,0 +1,36 @@
+class Solution
+{
+    public:
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    vector<int> topView(Node *root)
+    {
+        vector<int>v;
+        map<int,int>mp; //store the height and the node value
+        queue<pair<Node*,int>>q;
+        q.push({root,0});
+        
+        while(!q.empty()) {
+            Node* curr = q.front().first;
+            int h = q.front().second;
+            
+            if(mp.find(h)==mp.end()) {
+                mp[h] = curr->data;
+            }
+            
+            if(curr->left) {
+                q.push({curr->left,h-1});
+            }
+            
+            if(curr->right) {
+                q.push({curr->right,h+1});
+            }
+            q.pop();
+        }
+        
+        for(auto x : mp){
+            v.push_back(x.second);
+        }
+        return v;
+        //Your code here
+    }
