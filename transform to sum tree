@@ -1,0 +1,22 @@
+class Solution {
+  public:
+  
+    // Convert a given tree to a tree where every node contains sum of values of
+    // nodes in left and right subtrees in the original tree
+    int solve(Node *root) {
+         if(root == nullptr) {
+            return 0;
+        }
+        
+        int x = solve(root->left);
+        int y = solve(root->right);
+        int val = root->data;
+        root->data = x+y;
+        return x+y+val;
+    }
+    void toSumTree(Node *root)
+    {
+       solve(root);
+        // Your code here
+    }
+};
