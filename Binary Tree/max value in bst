@@ -1,0 +1,9 @@
+int maxValue(struct node* node)
+{   
+    /* loop down to find the rightmost leaf */
+    struct node* current = node;
+    while (current->right != NULL) 
+        current = current->right;
+      
+    return (current->data);
+}
