@@ -1,0 +1,11 @@
+int minValue(Node* root) {
+   int res = -1;
+   
+   while(root != nullptr) {
+       res = root->data;
+       root = root->left;
+   }
+   
+   return res;
+    // Code here
+}
