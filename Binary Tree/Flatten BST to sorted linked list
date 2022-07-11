@@ -1,0 +1,23 @@
+void inorder(Node* root, Node*& prev)
+{
+    if(root==nullptr) {
+        return nulltr;
+    }
+    inorder(root->left,prev);
+    prev->left = nullptr;
+    prev->right = root;
+    prev = root;
+    inorder(root->right,prev)
+}
+
+Node* flatten(Node* root)
+{
+    Node* dummy = new Node(-1);
+    Node* prev = dummy;
+    inorder(root,prev);
+
+    prev->left = nullptr;
+    prev->right=nullptr;
+    Node* ans = dummy->next;
+    return ans;
+}
