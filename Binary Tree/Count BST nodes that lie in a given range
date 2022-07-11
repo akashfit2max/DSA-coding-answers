@@ -1,0 +1,19 @@
+class Solution{
+public:
+    int c=0;
+    int getCount(Node *root, int l, int h)
+    {
+        if(root==nullptr) {
+            return 0;
+        }
+        getCount(root->left,l,h);
+        if(root->data >= l && root->data <= h)
+        {
+            c++;
+        }
+        getCount(root->right,l,h);
+        
+        return c;
+      // your code goes here   
+    }
+};
