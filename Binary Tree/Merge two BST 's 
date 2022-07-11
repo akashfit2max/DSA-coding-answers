@@ -1,0 +1,42 @@
+class Solution
+{
+    public:
+    vector<int>v;
+    void inorder(Node* root, vector<int>& v)
+    {
+        if(root==nullptr)
+        {
+            return;
+        }
+        inorder(root->left,v);
+        v.push_back(root->data);
+        inorder(root->right,v);
+    }
+    
+    Node* solve(int s, int e)
+    {
+        if(s>e)
+        {
+            return nullptr;
+        }
+        int m = (s+e)/2;
+        Node* newRoot = new Node(v[m]);
+        newRoot->left = solve(s,m-1);
+        newRoot->right = solve(m+1,e);
+        
+        return newRoot;
+    }
+    
+    
+    //Function to return a list of integers denoting the node 
+    //values of both the BST in a sorted order.
+    vector<int> merge(Node *root1, Node *root2)
+    {
+        inorder(root1,v);
+        inorder(root2,v);
+        sort(v.begin(),v.end());
+        int s=0;
+        int e = v.size()-1;
+        return solve(s,e);
+       //Your code here
+    }
