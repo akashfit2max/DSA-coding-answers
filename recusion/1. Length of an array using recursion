@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int findLen(vector<int>&v,int len)
+{
+    if(len < v.size())
+    {
+        return findLen(v,len+1);
+    }
+    return len;
+}
+
+int main() {
+    vector<int>v={1,2,3,4,5};
+    for(int i=0;i<v.size();i++)
+    {
+        cout<<v[i]<<" ";
+    }
+    int len = findLen(v,0);
+    cout<<"\n"<<len;
+}
