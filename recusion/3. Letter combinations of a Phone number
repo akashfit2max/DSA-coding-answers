@@ -1,0 +1,24 @@
+class Solution {
+public:
+    
+    vector<string> s={"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    void findCombination(string digits,vector<string>&res,string ds,int index){
+        if(index==digits.size()){
+            res.push_back(ds);
+            return;
+        }
+        int key=(digits[index]-'0');
+        for(int i=0;i<s[key].size();i++){
+            ds.push_back(s[key][i]);
+            findCombination(digits,res,ds,index+1);
+            ds.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> res;
+        if(digits.empty()) return res;
+        string ds;
+        findCombination(digits,res,ds,0);
+        return res;  
+    }
+};
