@@ -1,0 +1,32 @@
+void inorder(Node* root, Node* &prev)
+{
+    if(root == nullptr)
+    {
+        return;
+    }
+    inorder(root->left,prev);
+    prev->right = root;
+    prev->left = nullptr
+    prev = root;
+
+    inorder(root->right,prev);
+}
+
+
+
+Node* flatten(Node* root)
+{
+    if(root==nullptr) 
+    {
+        return nullptr;
+    }
+
+    Node* dummy = new Node(-1);
+    Node* prev = dummy;
+    inorder(root,prev);
+
+    prev->left=nullptr;
+    prev->right = nullptr;
+    Node* ans = dummy->right;
+    return ans;
+}
