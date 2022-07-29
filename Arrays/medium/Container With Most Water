@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l=0;
+        int r = height.size()-1;
+        int water = 0;
+        while(l<=r)
+        {
+            int lh = height[l];
+            int rh = height[r];
+            
+            int minh = min(lh,rh);
+            water = max(water, minh*(r-l));
+            
+            if(lh>rh)
+            {
+                r--;
+            }
+            else {
+                l++;
+            }
+        }
+        
+        return water;
+    }
+};
