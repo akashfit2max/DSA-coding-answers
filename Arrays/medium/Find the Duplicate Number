@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        set<int>s;
+        for(auto num : nums) {
+            if(s.count(num)==1) {
+                return num;
+            }
+            s.insert(num);
+        }
+        return 0;
+    }
+};
