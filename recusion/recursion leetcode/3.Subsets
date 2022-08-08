@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>res;
+        vector<int>sub;
+        findsub(nums,res,sub,0);
+        return res;
+    }
+    
+    void findsub(vector<int>&nums, vector<vector<int>>&res, vector<int>&sub, int ind)
+    {
+        if(ind == nums.size())
+        {
+            res.push_back(sub);
+            return;
+        }
+        
+        sub.push_back(nums[ind]);
+        findsub(nums,res,sub,ind+1);
+        sub.pop_back();
+        findsub(nums,res,sub,ind+1);
+    }
+};

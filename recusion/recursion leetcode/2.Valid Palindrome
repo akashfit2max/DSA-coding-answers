@@ -1,0 +1,16 @@
+bool check(string&s , int l , int r)
+{
+    if(l>=r)
+    {
+        return 1;
+    }
+    if(s[l] != s[r])
+    {
+        return 0;
+    }
+    return check(s,l+1,r-1);
+}
+bool isPalindrome(string &s)
+{
+	return check(s,0,s.length()-1);
+}
