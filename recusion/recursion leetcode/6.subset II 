@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void findsub(vector<int>&nums, vector<vector<int>>&res, vector<int>&sub, int ind)
+    {
+        if(ind == nums.size())
+        {
+            // if(find(res.begin(),res.end(),sub) == res.end())
+            res.push_back(sub);
+            return;
+        }
+        
+        sub.push_back(nums[ind]);
+        findsub(nums,res,sub,ind+1);
+        sub.pop_back();
+        
+        while(ind+1 < nums.size() && nums[ind]==nums[ind+1])
+        {
+            ind++;
+        }
+        findsub(nums,res,sub,ind+1);
+    }
+    
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>res;
+        vector<int>sub;
+        findsub(nums,res,sub,0);
+        return res;
+    }
+};

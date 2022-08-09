@@ -1,9 +1,12 @@
+
 class Solution {
 public:
-    void solve(vector<int>&nums, vector<int>&v, vector<vector<int>>&ans, vector<int>&freq)
+    
+   void solve(vector<int>&nums, vector<int>&v, vector<vector<int>>&ans, vector<int>&freq)
     {
         if(v.size() == nums.size())
         {
+            if(find(ans.begin(),ans.end(),v) == ans.end())
             ans.push_back(v);
             return;
         }
@@ -18,7 +21,8 @@ public:
             freq[i]=0;
         }
     }
-    vector<vector<int>> permute(vector<int>& nums) {
+    
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
         vector<int>v;
         vector<vector<int>>ans;
         int n = nums.size();
