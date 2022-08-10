@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void helper(int k, int n, vector<vector<int>>&ans, vector<int>&combi, int i)
+    {
+        if(k==0 && n==0)
+        {
+            ans.push_back(combi);
+            return;
+        }
+        if(i > 9) return;
+        if(k < 0) return;
+        
+        combi.push_back(i);
+        helper(k-1,n-i,ans,combi,i+1);
+        
+        // skip it
+        combi.pop_back();
+        helper(k,n,ans,combi,i+1);
+        
+        
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>>ans;
+        vector<int>combi;
+        helper(k,n,ans,combi,1);
+        return ans;
+    }
+};
