@@ -1,45 +1,47 @@
-#include <bits/stdc++.h> 
-using namespace std;
 class Solution {
 public:
     string simplifyPath(string path) {
-        stack<string>s;
-        path = path+"/";
-        string curr="";
+        stack<string>st;
+        string res;
         
-        for(auto p : path)
+        for(int i=0;i<path.length();i++)
         {
-            if(p=='/')
+            if(path[i] == '/') continue;
+            
+            string temp;
+            while(i<path.length() && path[i] != '/')
             {
-                if(!s.empty() && curr=="..")
+                temp+=path[i];
+                i++;
+            }
+    
+            if(temp == ".") continue;
+            
+            else if(temp == "..")
+            {
+                if(!st.empty())
                 {
-                    s.pop();
+                    st.pop();
                 }
-                else if(curr != "" && curr != "." && curr!="..")
-                {
-                    s.push(curr);
-                }
-                
-                curr = "";
             }
             else
             {
-                curr+=p;
+                st.push(temp);
             }
+            
+            
         }
         
-        string ans;
-        while(!s.empty())
+         while(!st.empty())
         {
-           ans = "/"+s.top()+ans;
-            s.pop();
+            res = "/" + st.top() + res;
+            st.pop();
         }
         
-        if(ans.size()==0)
-        {
-            ans="/";
-        }
+		// if no directory or file is present
+        if(res.size() == 0)
+            return "/";
         
-        return ans;
+        return res;
     }
 };
