@@ -33,7 +33,7 @@ public:
                 
                 countPlusMinus++;
             }
-            //dot
+            //dot - e. , .7. , .
             else if(ch == '.')
             {
                 if(eSceen || dotSceen)
