@@ -1,23 +1,60 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
-        stack<int>s;
-        int maxA = 0;
         int n = heights.size();
+        stack<int>s;
+        int leftSmall[n],rightSmall[n];
         
-        for(int i=0;i<=n;i++)
+        // find left small of each element
+        for(int i=0;i<n;i++)
         {
-            while(!s.empty() && (i==n || heights[s.top()] >= heights[i]))
+            while(!s.empty() && heights[s.top()] >= heights[i])
             {
-                int h = heights[s.top()];
                 s.pop();
-                int width;
-                if(s.empty()) width=i;
-                else width = i-s.top()-1;
-                maxA = max(maxA, h*width);
+            }
+            
+            if(s.empty())
+            {
+                leftSmall[i]=0;
+            }
+            else
+            {
+                leftSmall[i] = s.top()+1;
+            }
+            
+            s.push(i);
+        }
+        
+        while(!s.empty())
+        {
+            s.pop();
+        }
+        
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!s.empty() && heights[s.top()] >= heights[i])
+            {
+                s.pop();
+            }
+            
+            if(s.empty())
+            {
+                rightSmall[i]=n-1;
+            }
+            else
+            {
+                rightSmall[i]=s.top()-1;
             }
             s.push(i);
         }
-        return maxA;
+        
+        int maxlen = 0;
+        
+        for(int i=0;i<n;i++)
+        {
+            maxlen = max(maxlen, heights[i]*(rightSmall[i]-leftSmall[i]+1));
+        }
+        
+        return maxlen;
     }
 };
