@@ -6,7 +6,6 @@ public:
         int sum = 0, carry = 0;
         
         string num = "";
-        while(i>=0 || j>=0 || carry)
         {
             int sum = 0;
             if(i>=0)

@@ -1,22 +1,31 @@
-class Solution {
-public:
-    int myAtoi(string s) {
-        int n = 0 , l = s.length();
-        bool flag = false;
-        int index = 0;
-        for(;s[index]==' ';index++);
-        if(s[index] == '-') {flag = true;index++;}
-        else if(s[index] == '+') {flag = false;index++;}
-        while(s[index] >= '0' && s[index] <= '9' && index < l){
-            if(n > INT_MAX/10 )
-                return flag ? INT_MIN : INT_MAX;
-            n = n * 10;
-            if(n > INT_MAX - (s[index] - '0'))
-                return flag ? INT_MIN : INT_MAX;
-            n += s[index] - '0';
-            index++;
+class Solution
+{
+    public:
+        int myAtoi(string s)
+        {
+            long long ans = 0;
+            int neg = 1;
+            int i = 0;
+            while (i < s.length() and s[i] == ' ')
+            {
+                i++;
+            }
+
+            if (s[i] == '-' || s[i] == '+')
+            {
+                neg = s[i] == '-' ? -1 : 1;
+                i++;
+            }
+
+            while (i < s.length() && (s[i] >= '0' && s[i] <= '9'))
+            {
+
+                ans = ans *10 + (s[i] - '0');
+               	// ans *= 10;
+                i++;
+                if (ans * neg >= INT_MAX) return INT_MAX;
+                if (ans * neg <= INT_MIN) return INT_MIN;
+            }
+            return ans * neg;
         }
-        
-        return flag ? -1*n : n;
-    }
 };
