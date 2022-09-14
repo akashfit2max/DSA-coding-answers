@@ -11,12 +11,20 @@
  */
 class Solution {
 public:
-    int maxDepth(TreeNode* root) {
-        if(!root) return 0;
+   
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int>ans;
+        if(root==nullptr) return ans;
+        dfs(root,ans);
+        return ans;
+    }
+    
+    void dfs(TreeNode* root, vector<int>& ans)
+    {
+        if(root==nullptr) return;
         
-        int lh = maxDepth(root->left);
-        int rh = maxDepth(root->right);
-        
-        return 1 + max(lh,rh);
+        dfs(root->left,ans);
+        ans.push_back(root->val);
+        dfs(root->right,ans);
     }
 };
