@@ -15,7 +15,6 @@ private:
             }
             // if visited it has to be in the same path
              else if (pathVis[it]) {
-                check[node]=0;
                 return true;
             }
         }
