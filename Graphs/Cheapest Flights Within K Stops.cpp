@@ -7,6 +7,7 @@ public:
         }
 
         queue<pair<int,pair<int,int>>>q;
+        // {stops,{node,cost}}
         q.push({0,{src,0}});
         vector<int>dist(n,1e9);
         dist[src]=0;
