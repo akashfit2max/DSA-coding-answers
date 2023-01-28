@@ -22,7 +22,7 @@ class Solution {
                 return true;
             }
         }
-        
+        // while coming back remove the path visited
         pathVis[node]=0;
         return false;
     }
