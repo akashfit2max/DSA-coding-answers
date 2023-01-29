@@ -10,25 +10,21 @@
  * };
  */
 class Solution {
-   int solve(TreeNode* root, int &k)
-    {
-        if(!root)
-            return 0;
-        
-        int left = solve(root->left,k);
-        if(left)
-            return left;
-        k-=1;
-        if(k==0)
-            return root->val;
-        int right = solve(root->right,k);
-        return right;
-    }
 public:
+   int ans;
+    
     int kthSmallest(TreeNode* root, int k) {
-        ios_base::sync_with_stdio(false);
-        cin.tie(NULL);
-        
-        return solve(root,k);
+        inorder(root, k);
+        return ans;
     }
+    
+    void inorder(TreeNode* root, int& k) {
+        if (!root) return;
+        inorder(root->left, k);
+        if (--k == 0){
+            ans = root->val;
+            return;
+        } 
+        inorder(root->right, k);
+    }  
 };

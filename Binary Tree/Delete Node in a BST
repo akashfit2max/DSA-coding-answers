@@ -11,69 +11,58 @@
  */
 class Solution {
 public:
-    TreeNode* deleteNode(TreeNode* root, int key)
-    {
-        if(root == nullptr) 
-        {
-            return nullptr;
-        }
-        
-        if(root->val == key) {
-            return helper(root);
-        }
-        TreeNode* dummy = root;
-        while(root != nullptr) {
-            if(root->val > key) {
-                if(root->left != nullptr && root->left->val == key) 
-                {
-                    root->left = helper(root->left);
-                    break;
-                }
-                else
-                {
-                    root = root->left;
-                }
-            }
-            else 
-            {
-                if(root->right != nullptr && root->right->val == key) 
-                {
-                    root->right = helper(root->right);
-                    break;
-                }
-                else
-                {
-                    root = root->right;
-                }
-                
-            }
-        }
-        return dummy;
-    }
-    
-    
-    TreeNode* helper(TreeNode* root)
-    {
+
+    TreeNode* helper(TreeNode* root) {
         if(root->left == nullptr) {
             return root->right;
         }
-        
-        if(root->right==nullptr) {
+        else if(root->right == nullptr) {
             return root->left;
         }
-        
-        TreeNode* rightchild = root->right;
-        TreeNode* lastright = findlastright(root->left);
-        lastright->right = rightchild;
-        
+        // get the right child of the root
+        TreeNode* rightChild = root->right;
+        // find the last right child from the left
+        TreeNode* lastRight = findLastRight(root->left);
+        // connect the lastright with right child
+        lastRight->right = rightChild;
         return root->left;
     }
-    
-    TreeNode* findlastright(TreeNode* root) {
-        if(root->right==nullptr) {
+
+    TreeNode* findLastRight(TreeNode* root) {
+        if(root->right == nullptr) {
             return root;
         }
-        return findlastright(root->right);
+        return findLastRight(root->right);
+    }
+
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(root == nullptr) return nullptr;
+        TreeNode* dummy = root;
+
+        // find where the node lies
+        while(root != nullptr) {
+            // check if it is in the left
+            if(root->val > key) {
+                if(root->left != nullptr && root->left->val == key) {
+                    root->left = helper(root->left);
+                    break;
+                }
+                else {
+                    root = root->left;
+                }
+            }
+             else {
+                 // check in the right
+                if(root->right != nullptr && root->right->val == key) {
+                    root->right = helper(root->right);
+                    break;
+                }
+                else {
+                    root = root->right;
+                }
+             }     
+        }
+        return dummy;
     }
     
 };
