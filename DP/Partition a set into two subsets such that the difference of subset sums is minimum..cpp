@@ -9,7 +9,7 @@ int minSubsetSumDifference(vector<int>& arr, int n)
 	for(int ind = 0; ind<n; ind++) {
 		dp[ind][0] = true;
 	}
-	if(arr[0] < totalsum )dp[0][arr[0]] = true;
+	if(arr[0] <= totalsum )dp[0][arr[0]] = true;
 	for(int ind=1; ind<n; ind++) {
         for(int target=1; target<=totalsum; target++) {
             bool not_take = dp[ind-1][target];
