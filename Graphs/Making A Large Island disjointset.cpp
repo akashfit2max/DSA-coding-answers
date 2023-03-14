@@ -109,6 +109,7 @@ public:
             }
         }
 
+        // if all the elements are one
         mx=max(mx,ds.size[ds.findUPar(n*n-1)]);
         return mx;
     }
