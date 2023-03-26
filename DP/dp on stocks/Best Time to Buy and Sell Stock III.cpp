@@ -18,7 +18,7 @@ public:
         int n = prices.size();
         // vector<vector<vector<int>>>dp(n,vector<vector<int>>(2,vector<int>(3,-1)));
         vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
-        return f(0,1,2,prices,n,dp);
+        // return f(0,1,2,prices,n,dp);
         // tabulation
         int profit;
         for(int ind=n-1; ind>=0; ind--) {
