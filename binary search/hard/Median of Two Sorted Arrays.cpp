@@ -1,0 +1,94 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        // Merge the two sorted arrays
+        vector<int> temp;
+        int i = 0, j = 0;
+        
+        // Merge elements from both arrays while comparing their values
+        while (i < nums1.size() && j < nums2.size()) {
+            if (nums1[i] < nums2[j]) {
+                temp.push_back(nums1[i]); // Add the smaller element to the merged array
+                i++; // Move the pointer in nums1
+            } else {
+                temp.push_back(nums2[j]); // Add the smaller element to the merged array
+                j++; // Move the pointer in nums2
+            }
+        }
+        
+        // Append any remaining elements from nums1
+        while (i < nums1.size()) {
+            temp.push_back(nums1[i]); // Add remaining elements from nums1 to the merged array
+            i++;
+        }
+        
+        // Append any remaining elements from nums2
+        while (j < nums2.size()) {
+            temp.push_back(nums2[j]); // Add remaining elements from nums2 to the merged array
+            j++;
+        }
+
+        int n = temp.size(); // Total number of elements in the merged array
+        int mid = n / 2; // Calculate the middle index of the merged array
+        
+        // Check if the total number of elements is even or odd
+        // If it's even, return the average of the two middle elements, cast as a double data type.
+        // Otherwise, return the middle element itself.
+        return (double)(n % 2 == 0) ? (temp[mid - 1] + temp[mid]) / 2.0 : temp[mid];
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+double median(vector<int>& a, vector<int>& b) {
+    int n1 = a.size(), n2 = b.size();
+    //if n1 is bigger swap the arrays:
+    if (n1 > n2) return median(b, a);
+
+    int n = n1 + n2; //total length
+    int left = (n1 + n2 + 1) / 2; //length of left half
+    //apply binary search:
+    int low = 0, high = n1;
+    while (low <= high) {
+        int mid1 = (low + high) >> 1;
+        int mid2 = left - mid1;
+        //calculate l1, l2, r1 and r2;
+        int l1 = INT_MIN, l2 = INT_MIN;
+        int r1 = INT_MAX, r2 = INT_MAX;
+        if (mid1 < n1) r1 = a[mid1];
+        if (mid2 < n2) r2 = b[mid2];
+        if (mid1 - 1 >= 0) l1 = a[mid1 - 1];
+        if (mid2 - 1 >= 0) l2 = b[mid2 - 1];
+
+        if (l1 <= r2 && l2 <= r1) {
+            if (n % 2 == 1) return max(l1, l2);
+            else return ((double)(max(l1, l2) + min(r1, r2))) / 2.0;
+        }
+
+        //eliminate the halves:
+        else if (l1 > r2) high = mid1 - 1;
+        else low = mid1 + 1;
+    }
+    return 0; //dummy statement
+}
+
+int main()
+{
+    vector<int> a = {1, 4, 7, 10, 12};
+    vector<int> b = {2, 3, 6, 15};
+    cout << "The median of two sorted array is " << fixed << setprecision(1)
+         << median(a, b) << '\n';
+}
