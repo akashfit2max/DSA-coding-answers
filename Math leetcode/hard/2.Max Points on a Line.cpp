@@ -1,34 +1,28 @@
 class Solution {
 public:
-    int maxPoints(vector<vector<int>>& p) {
-        int n = p.size();
-        if(n<=2)
-        {
-            return n;
-        }
-        int maxi = 2;
-        
-        for(int i=0 ; i<n; i++)
-        {
-            for(int j=i+1; j<n; j++)
-            {
-                int total=2;
-                
-                for(int k=0;k<n;k++)
-                {
-                    if(k!=i && k!=j)
-                    {
-                        //(x,,y1)=i (x3,y3)=k   (x2,y2)=j 
-                        // (y2-y1)/(x2-x1) == (y3-y1)(x3-x1)
-                        if((p[j][1]-p[i][1])*(p[k][0]-p[i][0]) == (p[k][1]-p[i][1])*(p[j][0]-p[i][0]))
-                        {
-                            total++;
-                        }
-                    }
-                }
-                maxi = max(maxi,total);
+    int maxPoints(vector<vector<int>>& points) {
+        int n = points.size();
+
+        if( n == 1) return 1;
+
+        int res = 0;
+        // n * n * O(logN) = O(n2) 
+        for(int i=0; i<n; i++) { // for each point
+            unordered_map<string,int>mp;
+            for(int j=0; j<n; j++) {
+                if(i == j) continue;
+                int dy = points[j][1] - points[i][1];
+                int dx = points[j][0] - points[i][0];
+
+                auto gcd = __gcd(dy,dx);
+                string key = to_string(dx/gcd) + "_" + to_string(dy/gcd);
+                mp[key]++;
+            }
+
+            for(auto it : mp) {
+                res = max(res,it.second+1);
             }
         }
-        return maxi;
+        return res;
     }
 };
