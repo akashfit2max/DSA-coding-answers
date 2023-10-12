@@ -1,64 +1,60 @@
 class Solution {
 public:
-    vector<int> smallestRange(vector<vector<int>>& nums) {
-        vector<pair<int,int>>a;
-        for(int i=0;i<nums.size();i++)
-        {
-            for(auto num : nums[i])
-            {
-                // [4,10][12,34][34,12] - [4,1][10,1][12,2][34,2][34,3].. etc etc
-                a.push_back({num,i}); 
-            }
+class node{
+    public:
+        int data, row, col;
+        node(int data, int row, int col){
+            this-> data = data;
+            this -> col = col;
+            this -> row = row;
         }
-        
-        sort(a.begin(),a.end());
-        
-        int mini = INT_MAX;
-        int diff = nums.size();
-        int total=0;
-        vector<int>mp(diff,0);
-        vector<int>ans;
-        int j=0,i=0;
-        
-        while(i < a.size())
-        {
-            mp[a[i].second]++;
-            if(mp[a[i].second]==1) total++;
-            
-            if(total==diff)
-            {
-                if(a[i].first-a[j].first+1 < mini)
-                {
-                    mini = a[i].first-a[j].first+1;
-                    ans = {a[j].first,a[i].first};
-                }
-            }
-            
-            if(total == diff)
-            {
-                while(total==diff)
-                {
-                    if(mp[a[j].second] > 1)
-                    {
-                        mp[a[j].second]--;
-                        j++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                
-                if(a[i].first-a[j].first+1 < mini)
-                {
-                    mini = a[i].first-a[j].first+1;
-                    ans = {a[j].first,a[i].first};
-                }
-            }
-            
-            i++;
-        }
-        
-        return ans;
+};
+
+class compare{
+    public:
+    bool operator()(node * a, node * b){
+        return a->data > b->data;
     }
+};
+    
+vector<int> smallestRange(vector<vector<int>>& nums) {
+    int mini = INT_MAX;
+    int maxi = INT_MIN;
+    priority_queue<node *, vector<node *>, compare> minHeap;
+
+    int n = nums.size();
+
+    //finding min and max for first column
+    for(int i = 0; i < n; i++){
+        int ele = nums[i][0];
+        mini = min(mini, ele);
+        maxi = max(maxi, ele);
+        minHeap.push(new node(ele, i, 0));
+    }
+
+    //initial range 
+    int start = mini, end = maxi;
+
+    while(!minHeap.empty()){
+        auto curr = minHeap.top();
+        minHeap.pop();
+        
+        if(curr -> col + 1 < nums[curr -> row].size()){
+            int r = curr -> row;
+            int c = curr -> col + 1;
+            minHeap.push(new node(nums[r][c], r, c));
+            
+            mini = minHeap.top()->data;
+            maxi = max(maxi, nums[r][c]);
+            
+            if(maxi - mini < end - start){
+                start = mini;
+                end = maxi;
+            }
+        } 
+        else break;
+    }
+
+    return {start, end};
+}
 };
