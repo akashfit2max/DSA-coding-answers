@@ -1,57 +1,42 @@
 class Solution {
 public:
-    static bool cmp(pair<int,int>a, pair<int,int>b) {
-        if(a.first == b.first) {
-            return a.second < b.second;
-        }
-        return a.first < b.first;
-    }
-    vector<vector<int>> getSkyline(vector<vector<int>>& b) {
-        vector<vector<int>>result;
-        vector<pair<int,int>>points;
+    vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
+        vector<pair<int,int>>h;
 
-        // storing in pairs {start,ending} - {2,-10},{9,10} - -ve ending +ve starting
-        for(int i=0; i<b.size(); i++) {
-            int height = b[i][2];
-            int start = b[i][0];
-            int end = b[i][1];
+        // store left in +ve
+        // store right in -ve
 
-            points.push_back({start,-height});
-            points.push_back({end,height});
+        for(auto& it : buildings) {
+            h.push_back({it[0],-it[2]});
+            h.push_back({it[1],it[2]});
         }
 
-        // sorting in asec order
-        sort(points.begin(), points.end(), cmp);
+        // sort them
+        sort(h.begin(),h.end());
 
-        // store element in asce order
+        int prev = 0, curr = 0;
         multiset<int>s;
+        vector<vector<int>>res;
         s.insert(0);
-        int curr_height = 0;
-
-        for(auto x : points) {
-            // starting point h
-            if(x.second < 0) {
-                s.insert(-1*x.second);
-                int max_height = *s.rbegin();
-                if(curr_height != max_height) {
-                    curr_height = max_height;
-                    result.push_back({x.first,curr_height});
-                }
+        for(auto& it : h) {
+            if(it.second < 0) {
+                s.insert(-it.second);
             }
-            // ye ending point he ynha set ye values hatani h aur next greatest in set dhundna h 
             else {
-                // remove from set
-                auto it = s.find(x.second);
-                s.erase(it);
+                // ending of a building
+                s.erase(s.find(it.second));
+            }
 
-                // element hatane k baad next max nikalo aur check kro curr height se agar match ho raha skip wrna insert in ans
-                int max_height = *s.rbegin();
-                if(curr_height != max_height) {
-                    curr_height = max_height;
-                    result.push_back({x.first,curr_height});
-                }
+            // getting the latest element from multiset
+            curr = *s.rbegin();
+
+            if(prev != curr) {
+                res.push_back({it.first,curr});
+                // change prev to curr for the next building
+                prev = curr;
             }
         }
-        return result;
+
+        return res;
     }
 };
