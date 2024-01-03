@@ -1,23 +1,42 @@
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+
+
 class Solution {
-    vector<vector<int>> ans;  // ans[i] stores all nodes with a level of i
-   public:
-    int dfs(TreeNode* u) {    // dfs function returns the level of current node
-        if (u == nullptr) {
-            return -1;
-        }
-        int leftLevel = dfs(u->left);
-        int rightLevel = dfs(u->right);
-        int currentLevel =
-            max(leftLevel, rightLevel) + 1;  // calculate level of current node
-        while (ans.size() <=
-               currentLevel) {  // create more space in ans if necessary
-            ans.push_back({});
-        }
-        ans[currentLevel].push_back(u->val);
-        return currentLevel;
+public:
+    /*
+     * @param root: the root of binary tree
+     * @return: collect and remove all leaves
+     */
+    vector<vector<int>>res;
+
+    int getHeight(TreeNode * root) {
+        if(root == nullptr) return -1;
+
+        int lh = getHeight(root->left);
+        int rh = getHeight(root->right);
+
+        int lvl = 1 + max(lh,rh);
+
+        if(res.size() == lvl) res.push_back({});
+
+        res[lvl].push_back(root->val);
+
+        return lvl;
     }
-    vector<vector<int>> findLeaves(TreeNode* root) {
-        dfs(root);
-        return ans;
+    vector<vector<int>> findLeaves(TreeNode * root) {
+        // write your code here
+        getHeight(root);
+        return res;
     }
 };
