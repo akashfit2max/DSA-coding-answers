@@ -9,9 +9,9 @@ class Solution {
         long lcm = ((long) d1 * (long) d2) / gcd(d1, d2);
         while (lo <= hi) {
             long mid = lo + (hi - lo) / 2;
-            int x = (int) (mid - mid / d1);
-            int y = (int) (mid - mid / d2);
-            int z = (int) (mid - mid / lcm);
+            int x = (int) (mid - mid / d1); // kitne number h jo d1 se divisibke nai h
+            int y = (int) (mid - mid / d2); // kitne number h jo d2 se div nai h 
+            int z = (int) (mid - mid / lcm); // jo bot d1 and d2 se divi h
             if (x < u1 || y < u2 || z < u1 + u2) {
                 lo = mid + 1;
             } else {
